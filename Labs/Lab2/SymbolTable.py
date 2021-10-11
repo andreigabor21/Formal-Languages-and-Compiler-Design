@@ -13,11 +13,11 @@ class SymbolTable:
         position = self.hash(key)
         self.__items[position].append(key)
 
-    def delete(self, key):
+    def delete(self, key) -> None:
         position = self.hash(key)
         self.__items[position].remove(key)
 
-    def contains(self, key):
+    def contains(self, key) -> bool:
         position = self.hash(key)
         return key in self.__items[position]
 

@@ -12,5 +12,7 @@ if __name__ == '__main__':
     assert table.contains("a")
     table.delete("a")
     assert not table.contains("a")
+    assert table.contains("qwe")
+    assert table.contains("kl")
 
     print(table)
