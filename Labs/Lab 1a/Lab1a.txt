@@ -1,0 +1,85 @@
+Lab 1a
+
+p1) Compute the average of 3 numbers.
+
+fn main() {
+  int a;
+  int b;
+  int c;
+  int avg;
+  read(a);
+  read(b);
+  read(c);
+
+  //calculate average
+  int sum;
+  int avg;
+  sum = a + b + c;
+  avg = sum / 3;
+
+  println(avg);
+}
+
+p1err) Error: missing semicolon on line 26 and undeclared variable 'd' on line 35
+
+fn main() {
+  int a;
+  int b;
+  int c
+  int avg;
+  read(a);
+  read(b);
+  read(c);
+
+  //calculate average
+  int sum;
+  int avg;
+  sum = a + b + d;
+  avg = sum / 3;
+
+  println(avg);
+}
+
+p2) Verify if a number is prime.
+
+fn main() {
+  int n;
+  read(n);
+  bool ok;
+  ok = true;
+  if (n < 2 or n > 2 and n%2==0) {
+    ok=0;
+  }
+  if (ok == 1) {
+    int d;
+    for (d = 3; d * d <= n; d = d + 2){
+      if (n % d == 0) {
+        ok=0;
+      }
+    }
+  }
+  if (ok == 1) {
+    println("is prime");
+  }
+  else {
+    println("is not prime");
+  }
+}
+
+p3) Compute the sum of even numbers in an array.
+
+fn main() {
+  int array[100] arr;
+  int size;
+  read(size);
+  int sum;
+  sum=0;
+  int i;
+  for (i = 0; i < size; i = i + 1) {
+    read(arr[i]);
+    if (arr[i] % 2 == 0) {
+      sum = sum + arr[i];
+    }
+  }
+  println(sum);
+}

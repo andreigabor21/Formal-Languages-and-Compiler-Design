@@ -1,0 +1,33 @@
+Mini language lexic description
+
+Alphabet:
+a. Upper (A-Z) and lower case letters (a-z) of the English alphabet
+b. Underline character '_';
+c. Decimal digits (0-9);
+
+Lexic:
+a.Special symbols, representing:
+- operators + - * / = < <= = >= != [] and or
+- separators [ ] { } ( ) ; space
+- reserved words:
+  int fn main for while if else string read println
+
+b.identifiers
+-a sequence of letters and  digits, such that the first character is a letter; the rule is:
+
+  identifier ::= letter{letter}{digit}
+  letter ::= "A" | "B" | . ..| "Z" | "a" | ... | "b"
+  digit ::= "0" | non_zero_digit
+  non_zero_digit = "1" | ... | "9"
+
+c.constants
+
+1.integer - rule:
+      int = "0" | ["+"|"-"]non_zero_digit{digit}
+
+2.character
+    character:='letter'|'digit'
+
+3.string
+      string:="{letter | digit}"
+

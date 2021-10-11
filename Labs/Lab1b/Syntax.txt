@@ -1,0 +1,39 @@
+Syntax:
+
+program ::= fn main cmpdstmt
+
+declaration ::= type " " identifier
+
+type ::= "int" | "string"
+
+arraydecl ::= simpletype " " "array" "["integer"]"
+
+cmpdstmt ::= stmtlist
+
+stmtlist ::= stmt | stmt ";" stmtlist
+
+stmt ::= simplstmt | structstmt
+
+simplstmt ::= assignstmt | iostmt
+
+structstmt ::= cmpdstmt | ifstmt | whilestmt | forstmt
+
+ifstmt ::= "if" condition stmt ["else" stmt]
+
+forstmt = “for” “(“ assignment; condition;  “)” stmt
+
+whilestmt ::= "while" condition stmt
+
+assignstmt ::= IDENTIFIER "=" expression
+
+expression ::= expression "+" term | term
+
+term ::= term ("*"|"/") factor | factor
+
+factor ::= "(" expression ")" | identifier
+
+iostmt ::= "read" | "println" "(" identifier ")"
+
+condition ::= expression RELATION expression
+
+RELATION ::= "<" | "<=" | "=" | "!>" | ">=" | ">"
