@@ -1,0 +1,15 @@
+fn main() {
+  int array[100] arr;
+  int size;
+  read(size);
+  int sum;
+  sum=0;
+  int i;
+  for (i = 0; i < size; i = i + 1) {
+    read(arr[i]);
+    if (arr[i] % 2 == 0) {
+      sum = sum + arr[i];
+    }
+  }
+  println(sum);
+}
