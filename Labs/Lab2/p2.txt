@@ -15,7 +15,7 @@ fn main() {
     }
   }
   if (ok == 1) {
-    println('is prime');
+    println('');
   }
   else {
     println('is not prime');

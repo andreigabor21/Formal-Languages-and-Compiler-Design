@@ -41,12 +41,12 @@ class ScannerResult:
                                 line_counter) + "\n"
                     elif self.scanner.is_identifier(tokens[i]):
                         id = self.ST.insert(tokens[i])
-                        print("id", id)
+                        # print("id", id)
                         self.PIF.add("id", id)
                     elif self.scanner.is_constant(tokens[i]):
                         const = self.ST.insert(extra + tokens[i])
                         extra = ''
-                        print("const", const)
+                        # print("const", const)
                         self.PIF.add("const", const)
                     else:
                         exceptionMessage += 'Lexical error at token ' + tokens[i] + ', at line ' + str(

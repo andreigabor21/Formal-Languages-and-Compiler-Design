@@ -10,7 +10,6 @@ fn main() {
   int avg;
   sum = a + b + c;
   avg = sum / 3;
-  a = -1;
 
   println(avg);
 }
