@@ -1,0 +1,21 @@
+N = { program, declaration, type, cmpdstmt, stmtlist, stmt, simplstmt, structstmt, ifstmt, forstmt, forheader, whilestmt, assignstmt, expression, term, factor, iostmt, condition, RELATION }
+E = { func, main number, array, string, {, }, ;, +, -, *, /, (, ), while, for, if, <, <=, ==, !=, >=, > }
+S = program
+P = {
+program -> func main cmpdstmt,
+declaration -> type id ;,
+type -> number | string | number array [ const ],
+cmpdstmt -> { stmtlist },
+stmtlist -> stmt | stmt ; stmtlist,
+stmt -> simplstmt | structstmt,
+simplstmt -> ( assignstmt ) ; | ( iostmt ) ; | ( declaration ) ;,
+structstmt -> cmpdstmt | ifstmt | whilestmt | forstmt,
+ifstmt -> if condition stmt | if condition stmt else stmt,
+forstmt -> for forheader stmt,
+forheader -> ( number assignstmt ; condition ; assignstmt ),
+whilestmt -> while condition stmt,
+assignstmt -> id eq expression,
+expression -> term | expression + term,
+term -> term | term * factor,
+factor -> ( expression ) | integer,
+}
