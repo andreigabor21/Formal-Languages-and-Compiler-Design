@@ -1,5 +1,7 @@
 from Grammar import Grammar
 from Node import Node
+from ParserOutput import ParserOutput
+
 
 class ParserRecursiveDescendent:
     def __init__(self, grammar_file, sequence_file, out_file):
@@ -20,6 +22,8 @@ class ParserRecursiveDescendent:
         # representation - parsing tree
         self.tree = []
 
+        self.parserOutput = ParserOutput(self)
+
     # reads the input sequence from the given file
     def read_sequence(self, sequence_file):
         sequence = []
@@ -38,7 +42,7 @@ class ParserRecursiveDescendent:
                     line = file.readline()
         return sequence
 
-    def get_situation(self):
+    def write_all_data(self):
         with open(self.output_file, 'a') as file:
             # f.write("--------------\n")
             file.write(str(self.state) + " ")
@@ -108,7 +112,7 @@ class ParserRecursiveDescendent:
             # change production on top input
             length_last_production = len(self.grammar.get_productions_for_non_terminal(last[0])[last[1]])
             # delete last production from input
-            self.input_stack = self.input_stack[length_last_production:]  # maybe len -1 -> []
+            self.input_stack = self.input_stack[length_last_production:]
 
             # put new production in input
             new_production = self.grammar.get_productions_for_non_terminal(last[0])[last[1] + 1]
@@ -123,12 +127,13 @@ class ParserRecursiveDescendent:
             self.input_stack = [last[0]] + self.input_stack
 
     def print_working(self):
+        # prints the working stack to the screen and in the output file
         print(self.working_stack)
         self.write_in_output_file(str(self.working_stack))
 
     def run(self, w):
         while (self.state != 'f') and (self.state != 'e'):
-            self.get_situation()
+            self.write_all_data()
             if self.state == 'q':
                 if len(self.input_stack) == 0 and self.index == len(w):
                     self.success()
@@ -165,32 +170,35 @@ class ParserRecursiveDescendent:
         print(message)
         self.write_in_output_file(message, True)
         self.create_parsing_tree()
-        self.write_parsing_tree()
+        self.parserOutput.write_parsing_tree()
 
     def create_parsing_tree(self):
+        # creates the parsing tree
         father = -1
         for index in range(0, len(self.working_stack)):
+            # iterates in the working stack
             if type(self.working_stack[index]) == tuple:
-                self.tree.append(Node(self.working_stack[index][0]))
+                self.tree.append(Node(self.working_stack[index][0])) #value
                 self.tree[index].production = self.working_stack[index][1]
             else:
                 self.tree.append(Node(self.working_stack[index]))
 
         for index in range(0, len(self.working_stack)):
             if type(self.working_stack[index]) == tuple:
-                self.tree[index].father = father
+                self.tree[index].father = father # sets the father
                 father = index
+                # computes the length of the production of a non terminal
                 len_prod = len(self.grammar.get_productions()[self.working_stack[index][0]][self.working_stack[index][1]])
-                vector_indx = []
+                vector_index = []
                 for i in range(1, len_prod + 1):
-                    vector_indx.append(index + i)
+                    vector_index.append(index + i)
                 for i in range(0, len_prod):
-                    if self.tree[vector_indx[i]].production != -1:
-                        offset = self.get_length_depth(vector_indx[i])
+                    if self.tree[vector_index[i]].production != -1:
+                        offset = self.get_length_depth(vector_index[i])
                         for j in range(i + 1, len_prod):
-                            vector_indx[j] += offset
+                            vector_index[j] += offset
                 for i in range(0, len_prod - 1):
-                    self.tree[vector_indx[i]].sibling = vector_indx[i + 1]
+                    self.tree[vector_index[i]].sibling = vector_index[i + 1]
             else:
                 self.tree[index].father = father
                 father = -1
@@ -204,16 +212,9 @@ class ParserRecursiveDescendent:
                 sum += self.get_length_depth(index + i)
         return sum
 
-    def write_parsing_tree(self):
-        if self.state != "e":
-            self.write_in_output_file("\nParsing tree: ")
-            self.write_in_output_file("index info parent  left_sibling")
-            for index in range(0, len(self.working_stack)):
-                message = str(index) + "  " + str(self.tree[index])
-                self.write_in_output_file(message)
 
 if __name__ == '__main__':
-    parser2 = ParserRecursiveDescendent("g2.txt", "PIF.out", "out2.txt")
-    # parser1 = ParserRecursiveDescendent("g1.txt", "seq.txt", "out1.txt")
+    # parser2 = ParserRecursiveDescendent("g2.txt", "PIF.out", "out2.txt")
+    parser1 = ParserRecursiveDescendent("g1.txt", "seq.txt", "out1.txt")
     # run the Parser for the sequence
-    parser2.run(parser2.sequence)
+    parser1.run(parser1.sequence)
