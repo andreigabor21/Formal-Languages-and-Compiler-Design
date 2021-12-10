@@ -138,7 +138,7 @@ class ParserRecursiveDescendent:
                 if len(self.input_stack) == 0 and self.index == len(w):
                     self.success()
                 elif len(self.input_stack) == 0:
-                    self.state = 'e'
+                    self.state = 'b'
                     print("No input, still have terminals to parse")
                     break
                 else:
