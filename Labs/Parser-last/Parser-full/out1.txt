@@ -5,29 +5,73 @@ q 0
 q 0
 [('S', 0)]
 ['a', 'S', 'b', 'S']
+---advance---
+q 1
+[('S', 0), 'a']
+['S', 'b', 'S']
+---expand---
+q 1
+[('S', 0), 'a', ('S', 0)]
+['a', 'S', 'b', 'S', 'b', 'S']
 ---momentary insuccess---
-b 0
-[('S', 0)]
+b 1
+[('S', 0), 'a', ('S', 0)]
+['a', 'S', 'b', 'S', 'b', 'S']
+---another try---
+q 1
+[('S', 0), 'a', ('S', 1)]
+['a', 'S', 'b', 'S']
+---momentary insuccess---
+b 1
+[('S', 0), 'a', ('S', 1)]
 ['a', 'S', 'b', 'S']
 ---another try---
-q 0
-[('S', 1)]
-['a', 'S']
----momentary insuccess---
-b 0
-[('S', 1)]
-['a', 'S']
----another try---
-q 0
-[('S', 2)]
-['c']
----momentary insuccess---
-b 0
-[('S', 2)]
-['c']
----another try---
-b 0
-[]
+q 1
+[('S', 0), 'a', ('S', 2)]
+['c', 'b', 'S']
+---advance---
+q 2
+[('S', 0), 'a', ('S', 2), 'c']
+['b', 'S']
+---advance---
+q 3
+[('S', 0), 'a', ('S', 2), 'c', 'b']
 ['S']
+---expand---
+q 3
+[('S', 0), 'a', ('S', 2), 'c', 'b', ('S', 0)]
+['a', 'S', 'b', 'S']
+---momentary insuccess---
+b 3
+[('S', 0), 'a', ('S', 2), 'c', 'b', ('S', 0)]
+['a', 'S', 'b', 'S']
+---another try---
+q 3
+[('S', 0), 'a', ('S', 2), 'c', 'b', ('S', 1)]
+['a', 'S']
+---momentary insuccess---
+b 3
+[('S', 0), 'a', ('S', 2), 'c', 'b', ('S', 1)]
+['a', 'S']
+---another try---
+q 3
+[('S', 0), 'a', ('S', 2), 'c', 'b', ('S', 2)]
+['c']
+---advance---
+q 4
+[('S', 0), 'a', ('S', 2), 'c', 'b', ('S', 2), 'c']
+[]
+---success---
+[('S', 0), 'a', ('S', 2), 'c', 'b', ('S', 2), 'c']
 -------RESULT:-------
-ERROR! @ index: 0
+Sequence is accepted!
+
+Parsing tree: 
+index info parent  left_sibling
+0  S  -1  -1
+1  a  0  2
+2  S  -1  4
+3  c  2  -1
+4  b  -1  5
+5  S  -1  -1
+6  c  5  -1

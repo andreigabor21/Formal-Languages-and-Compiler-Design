@@ -10,6 +10,7 @@ class ParserRecursiveDescendent:
         self.output_file = out_file
         self.init_output_file()
         print(self.sequence)
+        print(self.grammar)
 
         # alpha - working stack, stores the way the parse is build
         self.working_stack = []
@@ -93,6 +94,7 @@ class ParserRecursiveDescendent:
         new_thing = self.working_stack.pop()
         self.input_stack = [new_thing] + self.input_stack
         self.index -= 1
+        # self.state = "b"
 
     def success(self):
         # print("---success---")
@@ -117,7 +119,9 @@ class ParserRecursiveDescendent:
             # put new production in input
             new_production = self.grammar.get_productions_for_non_terminal(last[0])[last[1] + 1]
             self.input_stack = new_production + self.input_stack
-        elif self.index == 1 and last[0] == self.grammar.get_start_symbol():
+        elif self.index == 0 and last[0] == self.grammar.get_start_symbol()[0]:
+
+            print(self.index)
             self.state = "e"
         else:
             # change production on top input
@@ -138,30 +142,23 @@ class ParserRecursiveDescendent:
                 if len(self.input_stack) == 0 and self.index == len(w):
                     self.success()
                 elif len(self.input_stack) == 0:
-                    self.state = 'b'
-                    print("No input, still have terminals to parse")
-                    break
-                else:
+                    self.momentary_insuccess()
+                elif self.input_stack[0] in self.grammar.get_non_terminals():
+                    self.expand()
                     # WHEN: head of input stack is a non terminal
-                    if self.input_stack[0] in self.grammar.get_non_terminals():
-                        self.expand()
-                    else:
-                        # WHEN: head of input stack is a terminal = current symbol from input
-                        if self.index < len(w) and self.input_stack[0] == w[self.index]:
-                            self.advance()
-                        else:
-                            # WHEN: head of input stack is a terminal ≠ current symbol from input
-                            self.momentary_insuccess()
-            else:
-                if self.state == 'b':
-                    if self.index == 0 and len(self.working_stack) == 0:
-                        self.state = 'e'
-                        print("no top working to look at in Back!")
-                        break
-                    if self.working_stack[-1] in self.grammar.get_terminals():
-                        self.back()
-                    else:
-                        self.another_try()
+
+                elif self.index < len(w) and self.input_stack[0] == w[self.index]:
+                    self.advance()
+                else:
+                    # WHEN: head of input stack is a terminal ≠ current symbol from input
+                    self.momentary_insuccess()
+
+            elif self.state == 'b':
+                if self.working_stack[-1] in self.grammar.get_terminals():
+                    self.back()
+                else:
+                    self.another_try()
+
         if self.state == 'e':
             message = "ERROR! @ index: {}".format(self.index)
         else:
@@ -214,7 +211,7 @@ class ParserRecursiveDescendent:
 
 
 if __name__ == '__main__':
-    # parser2 = ParserRecursiveDescendent("g2.txt", "PIF.out", "out2.txt")
-    parser1 = ParserRecursiveDescendent("g1.txt", "seq.txt", "out1.txt")
+    # parser = ParserRecursiveDescendent("g2.txt", "PIF.out", "out2.txt")
+    parser = ParserRecursiveDescendent("g1.txt", "seq.txt", "out1.txt")
     # run the Parser for the sequence
-    parser1.run(parser1.sequence)
+    parser.run(parser.sequence)
