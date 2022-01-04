@@ -1,6 +1,0 @@
-S
-a b c
-S
-S a@S@b@S
-S a@S
-S c@

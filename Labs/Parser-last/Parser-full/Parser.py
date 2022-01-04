@@ -211,7 +211,7 @@ class ParserRecursiveDescendent:
 
 
 if __name__ == '__main__':
-    # parser = ParserRecursiveDescendent("g2.txt", "PIF.out", "out2.txt")
-    parser = ParserRecursiveDescendent("g1.txt", "seq.txt", "out1.txt")
+    parser = ParserRecursiveDescendent("g2.txt", "PIF.out", "out2.txt")
+    # parser = ParserRecursiveDescendent("g1.txt", "seq.txt", "out1.txt")
     # run the Parser for the sequence
     parser.run(parser.sequence)

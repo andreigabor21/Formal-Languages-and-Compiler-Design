@@ -1,8 +1,0 @@
-N = { S, A, B }
-E = { a, b }
-S = S
-P = {
-	S -> aB | bA,
-	A -> a | aS | bAA,
-	B -> b | bS | aBB
-}
